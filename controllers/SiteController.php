@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use Throwable;
 
 class SiteController extends Controller
 {
@@ -136,7 +137,20 @@ class SiteController extends Controller
         ]);
 
         $result = $api->get('/default');
-        $data = Json::decode($result->response);
+       
+        if(! $result->response){
+            $errors = ['error' => "Error! <br>Api: ".$api->options['base_url']." Não encontrada!"];
+        }
+        try{
+            $data = Json::decode($result->response);
+        }catch (Throwable $e) {
+            $data = [];
+        }
+
+        
+           
+        
+        
         
         /*
         //craate News
@@ -149,7 +163,8 @@ class SiteController extends Controller
 
 
         return $this->render('feed',[
-            'data' => $data
+            'data' => $data,
+            'errors' => $errors ?? []
         ]);
 
         

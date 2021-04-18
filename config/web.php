@@ -11,10 +11,18 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'language' => 'pt_br',
+    'sourceLanguage' => 'pt-BR',
+    'timeZone' => 'America/Sao_Paulo',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'UhRUrjTLXXGBuwyNvr-6PJDVQXEIQcSi',
+        ],
+        'formatter' => [
+            'class' => 'app\classes\components\MyFormatter',
+            'dateFormat' => 'dd/MM/Y',
+            'currencyCode' => 'R$',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -28,10 +36,15 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.mailtrap.io',
+                'username' => '09fae3bdd1aa55',
+                'password' => '990efa269d98a5',
+                'port' => '2525',
+                'encryption' => 'tls',
+            ]
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
