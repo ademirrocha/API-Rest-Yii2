@@ -169,4 +169,65 @@ class SiteController extends Controller
 
         
     }
+
+    public function actionAuthorization(){
+
+        $auth = Yii::$app->authManager;
+
+        $admin = $auth->createRole('admin');
+        $moderator = $auth->createRole('moderator');
+        $operador = $auth->createRole('operador');
+
+        $auth->add($admin);
+        $auth->add($moderator);
+        $auth->add($operador);
+
+        $viewPost = $auth->createPermission('view-post');
+        $addPost = $auth->createPermission('create-post');
+        $editPost = $auth->createPermission('edit-post');
+        $deletePost = $auth->createPermission('delete-post');
+
+        $auth->add($viewPost);
+        $auth->add($addPost);
+        $auth->add($editPost);
+        $auth->add($deletePost);
+        
+        $auth->addChild($admin, $viewPost);
+        $auth->addChild($admin, $addPost);
+        $auth->addChild($admin, $editPost);
+        $auth->addChild($admin, $deletePost);
+
+        $auth->addChild($moderator, $addPost);
+        $auth->addChild($moderator, $editPost);
+        $auth->addChild($moderator, $viewPost);
+
+        $auth->addChild($operador, $viewPost);
+
+
+
+        $auth->assign($admin, 1); //Ademir
+        $auth->assign($moderator, 2); //Maisa
+        $auth->assign($operador, 3); //Maria
+
+
+        
+    
+
+
+    }
+
+    public function actionTestPermission($id){
+        $auth = Yii::$app->authManager;
+
+        //Para user authenticated
+        //echo "auth " . Yii::$app->user->can('view-post');
+
+        echo "<p>View Post: {$auth->checkAccess($id, 'view-post')}</p>";
+        echo "<p>Create Post: {$auth->checkAccess($id, 'create-post')}</p>";
+        echo "<p>Edit Post: {$auth->checkAccess($id, 'edit-post')}</p>";
+        echo "<p>Delete Post: {$auth->checkAccess($id, 'delete-post')}</p>";
+        
+    }
+
+
 }
