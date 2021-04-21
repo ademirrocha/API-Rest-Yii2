@@ -11,7 +11,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'language' => 'pt_br',
+    'language' => 'pt_BR',
     'sourceLanguage' => 'pt-BR',
     'timeZone' => 'America/Sao_Paulo',
     'components' => [
@@ -22,7 +22,6 @@ $config = [
         'formatter' => [
             'class' => 'app\classes\components\MyFormatter',
             'dateFormat' => 'dd/MM/Y',
-            'currencyCode' => 'R$',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -44,7 +43,7 @@ $config = [
                 'password' => '990efa269d98a5',
                 'port' => '2525',
                 'encryption' => 'tls',
-            ]
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
